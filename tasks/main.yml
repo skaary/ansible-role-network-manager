@@ -5,6 +5,7 @@
     state: present
   vars:
     apt_packages: "{{ [network_manager_package_name] + network_manager_shared_packages }}"
+  become: true
 
 # - name: ensure NetworkManager.conf is present
 #   copy:
@@ -22,5 +23,9 @@
   vars:
     apt_packages: "{{ [network_manager_gnome_package] + network_manager_shared_gnome_packages }}"
   when: network_manager_nm_applet
+  become: true
 
 - include_tasks: plugins.yml
+  args:
+    apply:
+      become: true
