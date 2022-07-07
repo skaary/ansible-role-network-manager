@@ -1,0 +1,15 @@
+---
+- name: Verify
+  hosts: all
+
+  tasks:
+    - name: Collect package facts.
+      package_facts:
+        manager: "auto"
+
+    - name: Verify Network-Manager is installed.
+      assert:
+        that:
+          - "'network-manager' in ansible_facts.packages"
+        success_msg: "Network-Manager is installed."
+        fail_msg: "Network-Manager is not installed."

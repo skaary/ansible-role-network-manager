@@ -1,0 +1,26 @@
+---
+- name: ensure network-manager is installed
+  apt:
+    name: "{{ apt_packages }}"
+    state: present
+  vars:
+    apt_packages: "{{ [network_manager_package_name] + network_manager_shared_packages }}"
+
+# - name: ensure NetworkManager.conf is present
+#   copy:
+#     src: files/NetworkManager.conf
+#     dest: /etc/NetworkManager/NetworkManager.conf
+#     owner: root
+#     group: root
+#     mode: 0644
+#   become: true
+
+- name: ensure network-manager gnome frontend is installed
+  apt:
+    name: "{{ apt_packages }}"
+    state: present
+  vars:
+    apt_packages: "{{ [network_manager_gnome_package] + network_manager_shared_gnome_packages }}"
+  when: network_manager_nm_applet
+
+- include_tasks: plugins.yml
